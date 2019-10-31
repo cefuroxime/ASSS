@@ -5,13 +5,12 @@ double bao()
 {
 	char wowotou[101];
 	double yikuaiqian = 0;
-	char* s;
-	int ddd = 0;
+	char* s= wowotou;
 	gets_s(wowotou, 101);
-	s = wowotou;
+	system("color 16");	system("cls");
 	if (*s != '\0' && strlen(s) <= 100)
 	{
-		for (; *s != '\0'; s++)
+		for (int ddd = 0; *s != '\0'; s++)
 		{
 			if (*s == '.') ddd++;
 			if ((*s != '.' && (*s < '0' || *s>'9')) || ddd > 1)
@@ -37,43 +36,37 @@ double bao()
 }
 double kao(double heihei)
 {
-	if (heihei >= 1000 || heihei <= 0)
+	if (heihei > 1000 || heihei < 0)
 	{	
 		printf("\033[41;33mThis number is out of range. Pleaze enter a number that between 0 and 1000.\033[0m\n");
 		return kao(bao());
 	}
 	return heihei;
 }
-void cao(double y)
-{
-	int z;
-	double x;
-	z = (int)y;
-	x = y - z;
-	printf("The Hexadecimal of %lf is %x.", y, z);
-	if (x == 0) printf("000000");
-	for (int j = 0, u = 0; j < 6 && x != 0; j++)
+int cao(double y)
+{	
+	printf("The exadecimal of %lf is %x.", y, (int)y);
+	char sige[10] = "000000", * p = sige;
+	y -= (int)y;
+	for (int j = 0, u = 0; j < 6 && y != 0; j++)
 	{
-		x *= 16;
-		u = (int)x;
-		x -= u;
-		if (u < 10)	 printf("%d", u);
-		else if (u == 10) printf("a");
-		else if (u == 11) printf("b");
-		else if (u == 12) printf("c");
-		else if (u == 13) printf("d");
-		else if (u == 14) printf("e");
-		else if (u == 15) printf("f");
+		u = (int)(y *= 16);
+		y -= u;
+		if (j == 5 && (int)(y * 16) > 7)
+			u++;
+		if (u < 10)
+			sige[j] += u;
+		else
+			sige[j] += u + 39;
 	}
-	printf("\nPress enter to continue.\n");
-	getchar();
-	system("cls");
+	printf("%s\nEnter another number to continue.\n",p);
+	scanf_s("/*[^\n]/*c");
+	return 0;
 }
 int main()
 {	
-	system("color 16");
+	system("color 16");	system("cls");
 	printf("Please enter a number that bettwen 0 and 1000.\n");
-	cao(kao(bao()));
-	return main();
+	return main(cao(kao(bao())));
 	return 0;
 }
